@@ -1,3 +1,3 @@
 FROM tomcat:8.0.20-jre8
  
-COPY target/java-web-app*.jar /usr/local/tomcat/webapps/java-web-app.jar
+COPY target/java-web-app*.war /usr/local/tomcat/webapps/java-web-app.war
