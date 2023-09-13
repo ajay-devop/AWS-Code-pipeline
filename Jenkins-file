@@ -15,26 +15,10 @@ pipeline{
                                         sh 'sudo mvn clean package'
                                         }
                         }
-			stage (" Build a docker Image " ){
-			     	steps {
-					sh 'sudo docker build -t new-java-app:$BUILD_TAG .'
-					sh 'sudo docker tag new-java-app:$BUILD_TAG ajaydevop/new-java-app:$BUILD_TAG'
-		
-		                        }
-			}
-			stage (" Push to dockerhub" ){
-				steps {
-					withCredentials([usernamePassword(credentialsId: 'my-docker-passwd', passwordVariable: 'docker_hub_pass_var', usernameVariable: 'docker_hub_user_var')]) {
-					sh 'sudo docker login -u ${docker_hub_user_var} -p ${docker_hub_pass_var}'
-					sh 'sudo docker push ajaydevop/new-java-app:$BUILD_TAG'
-}
-					}
-	
-			}
-			stage ("testing the pipeline") {
+			stage ("run java code on terminal") {
                                 steps {
-                                       sh 'sudo docker run -dit --name new-java-app -p 8080:8080 new-java-app:$BUILD_TAG'
+                                       sh 'java -cp target/helloworld-1.1.jar com.coveros.demo.helloworld.HelloWorld'
 				}
 			}
-                }
-        }
+              }
+	}
